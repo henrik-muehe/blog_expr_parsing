@@ -1,0 +1,29 @@
+%prefix "expr"
+
+expr <- add _
+
+op_cmp <- '<' / '>' / '=='
+op_add <- '+' / '-'
+op_mul <- '*' / '/'
+cmp    <- cmp _ op_cmp _ add
+       / add
+add    <- add _ op_add _ mul
+       / mul
+mul    <- mul _ op_mul _ prim
+       /  prim
+prim   <- literal_double / literal_int
+
+literal_int        <- [0-9]+
+literal_double     <- [0-9]+ '.' [0-9]+
+
+_      <- [ \t\r\n]* ('--' [^\n]* '\n' [ \t\r\n]?)*
+#__     <- &[^a-zA-Z_] _
+
+
+%%
+int main() {
+    expr_context_t *ctx = expr_create(NULL);
+    while (expr_parse(ctx, NULL));
+    expr_destroy(ctx);
+    return 0;
+}

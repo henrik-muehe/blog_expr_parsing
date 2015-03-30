@@ -1,0 +1,16 @@
+#l_orderkey < 200+50*7.5 and l_quantity > 9
+
+digraph {
+  graph [ dpi = 200 ]; 
+  rankdir=BT;
+  "l_orderkey" -> "<";
+  "+" -> "<";
+  "200" -> "+";
+  "50" -> "*";
+  "7.5" -> "*";
+  "*" -> "+";
+  "<" -> "and";
+  "l_quantity" -> ">";
+  "9" -> ">";
+  ">" -> "and";
+}
